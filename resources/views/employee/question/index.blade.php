@@ -36,9 +36,7 @@
                     <th scope="col" class="px-6 py-3">
                         Vraag
                     </th>
-                    <th scope="col" class="p-4">
-                        Gelinkt enquete
-                    </th>
+                 
                     <th scope="col"></th>
 
                 </tr>
@@ -51,12 +49,10 @@
                             {{ $loop->iteration}}
                         </td>
                         <td class="px-6 py-4">
-                           {{ $vraagtitle->question }}
+                           <a href="{{ route('employee.question.edit', $vraagtitle->id) }}">{{ $vraagtitle->question }}</a>
                         </td> 
-                        <td class="px-6 py-4">
-                        </td> 
-
-                        <td>
+                     
+                        <td scope="row">
                             <!--Antwoorden pop up modal-->
 
 
@@ -99,18 +95,7 @@
                             <!-- end pop up -->
 
                         </td>
-                        <td class="inline-flex space-x-4">
-
-
-                            
-
-
-
-                        
-                            <a href="{{ route('employee.question.edit', $vraagtitle->id) }}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit</a>
-                            <a href="#" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</a>
-                            
-                        </td>
+                      
 
                     </tr>
                 @endforeach
@@ -129,36 +114,139 @@
 
        $(".ansButton").click(function(){
 
-        var questions = @json($questions);
-        var qid = $(this).attr('data-id');
+            var questions = @json($questions);
+            var qid = $(this).attr('data-id');
 
-        var html = '';
+            var html = '';
 
-        for (let i = 0; i < questions.length; i++) {
-            if(questions[i]['id'] == qid)
-            {
-                var answersLength = questions[i]['answers'].length;
-                for (let j = 0; j < answersLength; j++) {
-                    let is_correct = 'No';
-                    if(questions[i]['answers'][j]['is_correct'] == 1){
-                        is_correct = 'Yes';
+            for (let i = 0; i < questions.length; i++) {
+                if(questions[i]['id'] == qid)
+                {
+                    var answersLength = questions[i]['answers'].length;
+                    for (let j = 0; j < answersLength; j++) {
+                        let is_correct = 'No';
+                        if(questions[i]['answers'][j]['is_correct'] == 1){
+                            is_correct = 'Yes';
+                        }
+                        html += `
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td scope="row" class="px-6 py-4  whitespace-nowrap w-32 dark:text-white">`+(j+1)+`</td>
+                                <td class="px-6 py-4">`+questions[i]['answers'][j]['option']+`</td> 
+                                <td class="px-6 py-4">`+is_correct+`</td> 
+                            </tr>
+
+                        `;
                     }
-                    html += `
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" class="px-6 py-4  whitespace-nowrap w-32 dark:text-white">`+(j+1)+`</td>
-                            <td class="px-6 py-4">`+questions[i]['answers'][j]['option']+`</td> 
-                            <td class="px-6 py-4">`+is_correct+`</td> 
-                        </tr>
-
-                    `;
+                    break;
                 }
-                break;
             }
-        }
 
-        $('.showAnswers').html(html);
+            $('.showAnswers').html(html);
         });
 
+    
+        // Edit answer + werkt niet
+
+        // $(".ansButton").click(function(){
+
+        //     var questions = @json($questions);
+        //     var qid = $(this).attr('data-id');
+
+        //     var html = '';
+
+        //     for (let i = 0; i < questions.length; i++) {
+        //         if(questions[i]['id'] == qid)
+        //         {
+        //             var answersLength = questions[i]['answers'].length;
+        //             for (let j = 0; j < answersLength; j++) {
+        //                 let is_correct = 'No';
+        //                 if(questions[i]['answers'][j]['is_correct'] == 1){
+        //                     is_correct = 'Yes';
+        //                 }
+        //                 html += `
+        //                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        //                         <td scope="row" class="px-6 py-4  whitespace-nowrap w-32 dark:text-white">`+(j+1)+`</td>
+        //                         <td class="px-6 py-4">`+questions[i]['answers'][j]['option']+`</td> 
+        //                         <td class="px-6 py-4">`+is_correct+`</td> 
+        //                     </tr>
+
+        //                 `;
+        //             }
+        //             break;
+        //         }
+        //     }
+
+        //     $('.showAnswers').html(html);
+        // });
+
+        // Tweede poging
+
+           // Edit answer
+        // $("#editAnswer").click(function(){
+
+        //     if ($(".answersList").length >= 6) {
+        //         $(".error").text("Maximum 6 answers")
+        //         setTimeout(function(){
+        //             $(".error").text("");
+        //         }, 2000);
+        //     } 
+        //     else {
+        //       var html = `
+        //       <div class="mb-6 flex answersList">
+        //         <input type="radio" name="is_correct" class="edit_is_correct">
+        //             <div class="flex space-x-2 items-center">
+        //                 <input type="text" name="edit_answers[]" placeholder="Enter answer!" required>
+        //                 </div>
+        //                 <button type="button" class="text-white focus:outline-none bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 removeBtn">Remove</button>
+        //         </div>`;
+        //         $("#editAnswerBody").append(html);
+        //     }
+
+        // });
+
+        // // Remove answer
+        // $(document).on("click", ".removeBtn", function(){
+        //     $(this).closest('.answersList').remove();
+        // });
+
+        // $(".editBtn").click(function(){
+        // var qid = $(this).attr('data-id');
+
+        // $.ajax({
+
+        //     url:"{{ route('employee.question.edit') }}",
+        //     type:"GET",
+        //     data:{qid:qid},
+        //     success:function
+        //     {
+        //         var qna = data.data[0];
+        //         $("#question_id").val(qna['id']);
+        //         $("#question").val(qna['question']);
+        //         var html = '';
+
+        //         for (let i = 0; i < qna['answers'].length; i++) {
+        //             html = `
+        //             <div class="mb-6 flex answersList">
+        //             <input type="radio" name="is_correct" class="edit_is_correct">
+        //                 <div class="flex space-x-2 items-center">
+        //                     <input type="text" name="answers[`+qna['answers'][i]['id']+`]" placeholder="Enter answer!" value="`+qna['answers'][i]['answer']+`" required>
+        //                     </div>
+        //                     <button type="button" class="text-white focus:outline-none bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 removeBtn">Remove</button>
+        //             </div>
+        //             `;
+                    
+        //         }
+        //     $("#editAnswerBody").append(html);
+
+
+        //     }
+        // });
+
+
+        // });
+
+
+        
     });
 
 </script>

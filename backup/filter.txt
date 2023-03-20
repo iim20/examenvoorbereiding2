@@ -1,0 +1,75 @@
+Controller index:
+
+    public function index()
+    {
+        $role = Auth::user()->is_employee;
+        if ($role == 1) {
+            $alle = request('status_1');
+            $beschikbaar = request('status_2');
+            $ingevuld = request('status_3');
+    
+            $enquetes = Enquete::query(); // start building the query
+            
+            if ($beschikbaar) {
+                $enquetes->where('status', '=', 'open');
+            }
+            
+            elseif($ingevuld){
+                $enquetes->where('status', '=', 'ingevuld');
+            }
+            else{
+                $enquetes->get();
+            }
+            $enquetes = $enquetes->get();
+                     
+            return view('employee.enquete.index', compact('enquetes'));
+        }
+         else{
+            return back()->with('role', 'Je bent een medewerker!');
+        }
+    }
+
+Filter index:
+
+<div class="flex justify-between items-baseline">
+            <div class="flex items-center">
+                <div class="flex items-center">
+                    <h1 class="text-4xl font-bold">Enquêtes</h1>
+                    <div class="space-x-4 flex ml-10 font-bold">
+                        <form method="GET" action="{{ route('employee.index') }}">
+                            <input type="hidden" name="status_1">
+                            <button class="p-4 bg-gray-200 w-36 text-center" type="submit">All</button>
+                        </form>
+                       <form method="GET" action="{{ route('employee.index') }}">
+                            <input type="hidden" name="status_2" value="open">
+                            <button class="p-4 bg-gray-200 w-36 text-center" type="submit">Beschikbaar</button>
+                        </form>
+                        <form method="GET" action="{{ route('employee.index') }}">
+                            <input type="hidden" name="status_3" value="ingevuld">
+                            <button class="p-4 bg-gray-200 w-36 text-center" type="submit">Ingevuld</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <a class="capitalize flex justify-between px-8 font-medium leading-6 w-44 py-2 rounded-lg bg-blue-600 text-white" href="/employee/enquete/create">
+                <span>
+                    <svg class="w-6" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+                    </svg>
+                </span>
+                <span>
+                    enquete
+                </span>
+            </a>
+        </div>
+
+
+Route:
+
+ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/employee/enquete', [EmployeeController::class, 'index'])->name('employee.index');
+    Route::get('/employee/enquete/create', [EmployeeController::class, 'create'])->name('employee.create');
+    Route::post('/employee/enquete', [EmployeeController::class, 'store'])->name('employee.store');
+
+
+Map structuur:
+Employee\Enquete\index, create

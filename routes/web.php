@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/employee/question', [EmployeeController::class, 'question_store'])->name('employee.question.store');
     Route::get('/employee/question/{question}/edit', [EmployeeController::class, 'question_edit'])->name('employee.question.edit');
     Route::put('/employee/question/{edit}', [EmployeeController::class, 'question_update'])->name('employee.question.update');
+    Route::delete('/employee/question/{question}', [EmployeeController::class, 'question_destroy'])->name('employee.question.destroy');
+
 
 
     // Route::get('/employee/enquete', [EmployeeController::class, 'question_enquete'])->name('getQuestionsEnquete');

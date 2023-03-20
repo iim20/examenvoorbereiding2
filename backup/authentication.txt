@@ -1,0 +1,68 @@
+In Nav:
+
+<div class="flex items-center space-x-3">
+            @if (Route::has('login'))
+              @auth
+                @if (Auth::check() && Auth::user()->is_employee)
+                    <a href="{{ route('employee.index') }}" class="{{ request()->is('employee*', 'create') ? 'active' : '' }} text-lg font-medium leading-6 text-gray-900">Enquete</a>
+                    <span>●</span>
+                    <a href="{{ route('employee.index') }}" class="{{ request()->is('employee*', 'create') ? 'active' : '' }} text-lg font-medium leading-6 text-gray-900">Klanten profiles</a>
+                    <span>●</span>
+                @endif
+
+
+                <form action="{{ route('logout') }}" method="post">
+                  @csrf
+                  <button class="text-lg font-medium leading-6 text-gray-900" type="submit">Logout</button>
+                </form>
+                @else
+                  <div class="space-x-4">
+                    <a href="{{ route('login') }}" class="text-lg font-medium leading-6 text-gray-900">Login</a>
+                    <span>/</span>
+                    @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="text-lg font-medium leading-6 text-gray-900">Register</a>
+                  </div>
+                @endif
+              @endauth
+            @endif
+        </div>
+
+
+
+In elke Controller functions:
+ $role=Auth::user()->is_employee;
+        $users = User::all();
+        if($role==0){
+            return view('customer.index');
+        }
+        else{
+            return back()->with('unauthenticated', 'Je hebt geen toegang');
+        }
+
+In AuthenticatedSessionController:
+
+   public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        $role=Auth::user()->is_employee;
+        
+        if ($role == 1) {
+            return redirect()->route('employee.index');
+        } else {
+            return redirect()->route('customer.index');
+        }
+    }
+
+
+
+In app: 
+<title>AskMeAnything - @yield('title')</title>
+
+Elke pagina:
+
+Onder @extends
+@section('title', 'Customer')
+

@@ -99,7 +99,7 @@ class EmployeeController extends Controller
     {
         $enquete = Enquete::findOrFail($id);
         $enquete->destroy($id);
-        return redirect()->route('employee.index')->with('verwijderd', 'Enqguete is verwijderd'); 
+        return redirect()->route('employee.index')->with('verwijderd', 'Enquete is verwijderd'); 
     }
 
 
@@ -168,7 +168,7 @@ class EmployeeController extends Controller
         $question = Question::findorFail($id);
 
         $question->update([
-            'title' => $request->input('title'),
+            'question' => $request->input('question'),
         ]);
 
       
@@ -176,6 +176,13 @@ class EmployeeController extends Controller
 
 
         return redirect()->route('employee.question.index', $question);
+    }
+
+    public function question_destroy($id)
+    {
+        $question = Question::findOrFail($id);
+        $question->destroy($id);
+        return redirect()->route('employee.question.index')->with('verwijderd', 'Question is verwijderd'); 
     }
 
     public function question_enquete(Request $request)
