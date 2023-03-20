@@ -173,4 +173,53 @@ public function addQuestions(Request $request)
     return response()->json(['success' => true]);
 }
 This script will handle the "Add" button click event and send the selected questions back to the server using AJAX, passing the enquête ID and the selected question IDs as parameters. The controller method will retrieve the enquête and the selected questions, and use the attach() method to add the questions to the enquête. Finally, a JSON response indicating whether the operation was successful will be returned. If the operation was successful, the modal will be hidden and the page will be refreshed to reflect the changes.
+
+// ends eerste attemp!
+
+
+
+
+<!-- Button to trigger the modal -->
+<button class="btn btn-primary" data-toggle="modal" data-target="#addQuestionsModal">Add Questions</button>
+
+<!-- Modal to fetch available questions and add them to the chosen enquête -->
+<div class="modal fade" id="addQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addQuestionsModalLabel">Add Questions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Column for available questions -->
+                    <div class="col-6">
+                        <h6>Available Questions</h6>
+                        <div class="list-group">
+                            @foreach($questions as $question)
+                                <label class="list-group-item">
+                                    <input type="checkbox" name="available_questions[]" value="{{ $question->id }}"> {{ $question->question_text }}
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                    <!-- Column for chosen enquête and selected questions -->
+                    <div class="col-6">
+                        <h6>Chosen Enquête</h6>
+                        <div class="list-group">
+                            <label class="list-group-item">
+                                {{ $enquete->en
+ // end
+
+
+
+
+
+
+
+
+
+
                                     
