@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('question_enquete', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id')->references('id')->on('questions');
-            $table->foreignId('enquete_id')->references('id')->on('enquetes');
+            $table->foreignId('question_id')->references('id')->on('questions')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('enquete_id')->references('id')->on('enquetes')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->timestamps();
         });

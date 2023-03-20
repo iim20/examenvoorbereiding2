@@ -95,6 +95,13 @@ class EmployeeController extends Controller
         return redirect()->route('employee.index', $enquete);
     }
 
+    public function destroy($id)
+    {
+        $enquete = Enquete::findOrFail($id);
+        $enquete->destroy($id);
+        return redirect()->route('employee.index')->with('verwijderd', 'Enqguete is verwijderd'); 
+    }
+
 
     public function question_index()
     {

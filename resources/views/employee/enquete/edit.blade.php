@@ -22,7 +22,7 @@
 
                     <div class="mt-6">
                         <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
-                        <select id="category_id" name="category_id" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                        <select id="category_id" name="category_id" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md">
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id', $enquete->category_id) == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
@@ -43,8 +43,15 @@
 
 
 
-                    <div class="flex items-center justify-end mt-6">
-                        <button type="submit" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+                    <div class="flex items-baseline justify-end mt-6 space-x-4">
+                        <form onsubmit="return confirm('Weet u zeker dat wilt u enquete verwijderen?')" action="{{ route('employee.destroy', $enquete) }}" method="POST">
+                            <button type="submit" class="px-5 py-2.5 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase hover:bg-red-500 active:bg-red-900 focus:outline-none focus:border-red-900 focus:shadow-outline-gray  transition ease-in-out duration-150">Delete</a>
+                            @csrf
+                            @method('DELETE')    
+                        </form>
+
+
+                        <button type="submit" class="px-5 py-2.5 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray  transition ease-in-out duration-150">
                             Update
                         </button>
                     </div>
