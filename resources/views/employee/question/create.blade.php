@@ -12,7 +12,7 @@
         </div>
 
 
-        <form id="addQna" method="POST" action="{{ route('employee.question.store') }}">
+        <form id="addQna" method="POST" action="{{ route('employee.question.store')}}">
             @csrf
 
             <div id="qna-container">

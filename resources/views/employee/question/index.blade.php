@@ -51,7 +51,10 @@
                         <td class="px-6 py-4">
                            <a href="{{ route('employee.question.edit', $vraagtitle->id) }}">{{ $vraagtitle->question }}</a>
                         </td> 
-                     
+                      <td>
+                          <a href="{{ route('employee.enquetequestion.create', ['question_id' => $vraagtitle->id]) }}" class="ansButton block cursor-pointer text-blue-700 text-sm">Voeg enquete</a>
+                        </td>
+                          
                         <td scope="row">
                             <!--Antwoorden pop up modal-->
 
@@ -99,6 +102,7 @@
 
                     </tr>
                 @endforeach
+                <span class="error text-red-600"></span>
             
             </tbody>
         </table> 
@@ -145,105 +149,6 @@
         });
 
     
-        // Edit answer + werkt niet
-
-        // $(".ansButton").click(function(){
-
-        //     var questions = @json($questions);
-        //     var qid = $(this).attr('data-id');
-
-        //     var html = '';
-
-        //     for (let i = 0; i < questions.length; i++) {
-        //         if(questions[i]['id'] == qid)
-        //         {
-        //             var answersLength = questions[i]['answers'].length;
-        //             for (let j = 0; j < answersLength; j++) {
-        //                 let is_correct = 'No';
-        //                 if(questions[i]['answers'][j]['is_correct'] == 1){
-        //                     is_correct = 'Yes';
-        //                 }
-        //                 html += `
-        //                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        //                         <td scope="row" class="px-6 py-4  whitespace-nowrap w-32 dark:text-white">`+(j+1)+`</td>
-        //                         <td class="px-6 py-4">`+questions[i]['answers'][j]['option']+`</td> 
-        //                         <td class="px-6 py-4">`+is_correct+`</td> 
-        //                     </tr>
-
-        //                 `;
-        //             }
-        //             break;
-        //         }
-        //     }
-
-        //     $('.showAnswers').html(html);
-        // });
-
-        // Tweede poging
-
-           // Edit answer
-        // $("#editAnswer").click(function(){
-
-        //     if ($(".answersList").length >= 6) {
-        //         $(".error").text("Maximum 6 answers")
-        //         setTimeout(function(){
-        //             $(".error").text("");
-        //         }, 2000);
-        //     } 
-        //     else {
-        //       var html = `
-        //       <div class="mb-6 flex answersList">
-        //         <input type="radio" name="is_correct" class="edit_is_correct">
-        //             <div class="flex space-x-2 items-center">
-        //                 <input type="text" name="edit_answers[]" placeholder="Enter answer!" required>
-        //                 </div>
-        //                 <button type="button" class="text-white focus:outline-none bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 removeBtn">Remove</button>
-        //         </div>`;
-        //         $("#editAnswerBody").append(html);
-        //     }
-
-        // });
-
-        // // Remove answer
-        // $(document).on("click", ".removeBtn", function(){
-        //     $(this).closest('.answersList').remove();
-        // });
-
-        // $(".editBtn").click(function(){
-        // var qid = $(this).attr('data-id');
-
-        // $.ajax({
-
-        //     url:"{{ route('employee.question.edit') }}",
-        //     type:"GET",
-        //     data:{qid:qid},
-        //     success:function
-        //     {
-        //         var qna = data.data[0];
-        //         $("#question_id").val(qna['id']);
-        //         $("#question").val(qna['question']);
-        //         var html = '';
-
-        //         for (let i = 0; i < qna['answers'].length; i++) {
-        //             html = `
-        //             <div class="mb-6 flex answersList">
-        //             <input type="radio" name="is_correct" class="edit_is_correct">
-        //                 <div class="flex space-x-2 items-center">
-        //                     <input type="text" name="answers[`+qna['answers'][i]['id']+`]" placeholder="Enter answer!" value="`+qna['answers'][i]['answer']+`" required>
-        //                     </div>
-        //                     <button type="button" class="text-white focus:outline-none bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 removeBtn">Remove</button>
-        //             </div>
-        //             `;
-                    
-        //         }
-        //     $("#editAnswerBody").append(html);
-
-
-        //     }
-        // });
-
-
-        // });
 
 
         

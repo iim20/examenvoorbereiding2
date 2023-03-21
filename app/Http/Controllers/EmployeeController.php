@@ -195,6 +195,38 @@ class EmployeeController extends Controller
 
 
     }
+
+    public function enqueteQuestion($question_id)
+    {
+        $question = Question::find($question_id);
+        return view('employee.question.enquetes', ['question_id' => $question]);
+    }
+    
+
+    public function enqueteQuestion_store(Request $request)
+{
+    $enquete_id = $request->input('enquete_id');
+    $question_id = request()->input('question_id');
+    
+    // Retrieve the existing QtsEnquete record with the given question_id
+    $enqueteQuestion = QtsEnquete::where('question_id', $question_id)->first();
+
+    // If the record does not exist, create a new one
+    if (!$enqueteQuestion) {
+        $enqueteQuestion = new QtsEnquete();
+        $enqueteQuestion->question_id = $question_id;
+    }
+
+    // Update the enquete_id value and save the record
+    $enqueteQuestion->enquete_id = $enquete_id;
+
+    $enqueteQuestion->save();
+
+    return redirect('/employee/question')->with('success', 'Enquete is successfully gekoppeld!');
+}
+
+
+    
     
     
 

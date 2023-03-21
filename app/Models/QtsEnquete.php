@@ -15,4 +15,16 @@ class QtsEnquete extends Model
         'enquete_id'
     ];
 
+    
+    public function enquete()
+    {
+        return $this->belongsTo(Enquete::class, 'enquete_id');
+    }
+    
+    public function question()
+    {
+        return $this->belongsTo(Question::class, 'question_id');
+    }
+    
+
 }

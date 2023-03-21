@@ -113,26 +113,30 @@
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
-                                                <form id="addQnaEnquete">
 
-                                                    @csrf
-                                                    <input type="hidden" name="enquete_id" id="addEnqueteId">
-                                                    <div class="my-3 mx-4 space-y-2">
-                                                          <input class="w-full" type="search" name="search" placeholder="Search here">
-                                                          <table class="w-full text-sm text-left text-gray-500 border-2 border-t dark:text-gray-400">
-                                                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-2 border-t dark:bg-gray-700 dark:text-gray-400">
-                                                                <tr>
-                                                                    <th scope="col" class="p-4">#</th>
-                                                                    <th scope="col" class="px-6 py-3">Question</th>
+                                                <div class="my-3 mx-4 space-y-2">
+                                                      <table class="w-full text-sm text-left text-gray-500 border-2 border-t dark:text-gray-400">
+                                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-2 border-t dark:bg-gray-700 dark:text-gray-400">
+                                                            <tr>
+                                                                <th scope="col" class="p-4">#</th>
+                                                                <th scope="col" class="px-6 py-3">Question</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="addBody">
+                                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                                
+                                                            @foreach(\App\Models\QtsEnquete::where('enquete_id', $enquete->id)->get() as $qtsEnquete)
+                                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                                    <td class="px-6 py-4 whitespace-nowrap w-32">{{$loop->iteration}}</td>
+                                                                    <td class="px-6 py-4">{{$qtsEnquete->question->question }}</td>
                                                                 </tr>
-                                                            </thead>
-                                                            <tbody class="addBody">
+                                                            @endforeach
 
-                                                            </tbody>
-                                                            </table> 
-                                                     
-                                                      </div>
-                                                  </form>
+                                                            </tr>
+                                                        </tbody>
+                                                        </table> 
+                                                 
+                                                 </div>
                                             
                                             <div class="flex justify-end p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                                                 <button data-modal-hide="staticModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add vraag</button>
