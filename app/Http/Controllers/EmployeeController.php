@@ -139,14 +139,10 @@ class EmployeeController extends Controller
             ]);
 
             foreach ($request->answers as $answer) {
-                $is_correct = 0;
-                if ($request->is_correct == $answer) {
-                    $is_correct = 1;
-                } 
+               
                 Answer::insert([
                     "question_id" =>$question,
                     'option' =>$answer,
-                    'is_correct' =>$is_correct
                 ]);
             }
 
