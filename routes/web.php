@@ -58,8 +58,16 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
+    Route::get('/customer/{enquete_id}/questions', [CustomerController::class, 'enqueteQuestion'])->name('customer.enquetequestion');
+    Route::get('/customer/{enquete_id}/question/{question_id}/answer', [CustomerController::class, 'showAnswerForm'])->name('customer.showAnswerForm');
+    Route::post('/customer/{enquete_id}/question/{question_id}/answer', [CustomerController::class, 'submitAnswer'])->name('customer.submitAnswer');
+
+    
+
+
     Route::get('/customer/create', [CustomerController::class, 'create'])->name('customer.create');
     Route::post('/customer', [CustomerController::class, 'store'])->name('customer.store');
+
 });
 
 

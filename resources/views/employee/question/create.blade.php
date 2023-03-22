@@ -44,65 +44,57 @@
 
             
 
-$(document).ready(function(){
-  $("#addQna").submit(function(e){
-    e.preventDefault();
+    $(document).ready(function(){
+      $("#addQna").submit(function(e){
+          e.preventDefault();
+          
 
-    // Check if all textareas are filled
-    var isFilled = false;
-    if ($("textarea").length > 0) {
-      isFilled = true;
-      $("textarea").each(function(){
-        if($(this).val() == ""){
-          isFilled = false;
-          return false;
-        }
+          if ($(".answers").length < 2) 
+          {
+              $(".error").text("Minimum 4 answers")
+              setTimeout(function(){
+                  $(".error").text("");
+              }, 2000);
+          } 
+          else 
+          {
+             
+     
+                  this.submit();
+              
+         
+          }
       });
-    }
-
-    // If all textareas are filled, submit the form
-    if (isFilled) 
-    {
-      this.submit();
-    } 
-    else 
-    {
-      $(".error").text("Please fill in answer")
-      setTimeout(function(){
-        $(".error").text("");
-      }, 2000); 
-    }
-  });
-
-
-
 
         
         
-        // Add answer
-        $("#addAnswer").click(function(){
+      // Add answer
+      $("#addAnswer").click(function(){
 
-            if ($(".answers").length >= 1) {
-                $(".error").text("Maximum 1 answers")
-                setTimeout(function(){
-                    $(".error").text("");
-                }, 2000);
-            } 
-            else {
+        if ($(".answers").length >= 4) {
+            $(".error").text("Maximum 4 answers")
+            setTimeout(function(){
+                $(".error").text("");
+            }, 2000);
+        } 
+        else {
               var html = `
-              <div class="mb-6 flex answers">
-                    <div class="space-x-2 items-center">
-                            <textarea name="answers[]" placeholder="Enter answer!" required" id="" cols="30" rows="10"></textarea>
-                        </div>
-                </div>`;
+                <div class="mb-6 flex answers">
+                    <div class="flex space-x-2 items-center">
+                    <input type="text" name="answers[]" placeholder="Enter answer!" required>
+                  <div class="space-x-2 items-center">
+                    <button type="button" class="text-white focus:outline-none bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 removeBtn">Remove</button>
+                  </div>`;
                 $("#qna-container").append(html);
             }
           
         });
 
-      
-
-
+        // Remove answer
+        $(document).on("click", ".removeBtn", function(){
+            $(this).closest('.answers').remove();
+        });
+        
     });
 </script>
 
