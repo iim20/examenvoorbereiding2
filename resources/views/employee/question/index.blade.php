@@ -10,6 +10,18 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="p-4 mb-4 text-sm text-white rounded-lg bg-red-600" role="alert">
+                <span class="font-medium">{{ session('error') }}</span>
+            </div>
+        @endif
+
+        @if(session('success'))
+            <div class="p-4 mb-4 text-sm text-white rounded-lg bg-green-600" role="alert">
+                <span class="font-medium">{{ session('success') }}</span>
+            </div>
+        @endif
+
         <div class="flex justify-between items-baseline">
             <div class="flex items-center">
               
@@ -28,6 +40,7 @@
         </div>
 
 
+        <span class="error text-red-600"></span>
      
        <table class="w-full text-sm text-left text-gray-500 border-2 border-t dark:text-gray-400 mt-10">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-2 border-t dark:bg-gray-700 dark:text-gray-400">
@@ -51,10 +64,10 @@
                         <td class="px-6 py-4">
                            <a href="{{ route('employee.question.edit', $vraagtitle->id) }}">{{ $vraagtitle->question }}</a>
                         </td> 
-                      <td>
-                          <a href="{{ route('employee.enquetequestion.create', ['question_id' => $vraagtitle->id]) }}" class="ansButton block cursor-pointer text-blue-700 text-sm">Voeg enquete</a>
-                        </td>
-                          
+                  <td>
+                      <a href="{{ route('employee.enquetequestion.create', ['question_id' => $vraagtitle->id]) }}" class="ansButton block cursor-pointer text-blue-700 text-sm">Voeg enquete</a>
+                    </td>
+                      
                         <td scope="row">
                             <!--Antwoorden pop up modal-->
 

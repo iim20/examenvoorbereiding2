@@ -202,24 +202,29 @@ class EmployeeController extends Controller
     public function enqueteQuestion_store(Request $request)
 {
     $enquete_id = $request->input('enquete_id');
-    $question_id = request()->input('question_id');
-    
-    // Retrieve the existing QtsEnquete record with the given question_id
-    $enqueteQuestion = QtsEnquete::where('question_id', $question_id)->first();
+    $question_id = $request->input('question_id');
 
-    // If the record does not exist, create a new one
-    if (!$enqueteQuestion) {
-        $enqueteQuestion = new QtsEnquete();
-        $enqueteQuestion->question_id = $question_id;
+    // Check if the given combination of enquete_id and question_id already exists
+    $existingEnqueteQuestion = QtsEnquete::where('enquete_id', $enquete_id)
+        ->where('question_id', $question_id)
+        ->first();
+
+    if ($existingEnqueteQuestion) {
+        // Return an error message if the combination already exists
+        return redirect('/employee/question')
+            ->with('error', 'This question is already associated with the selected enquête.');
     }
 
-    // Update the enquete_id value and save the record
+    // If the combination does not exist, create a new QtsEnquete record
+    $enqueteQuestion = new QtsEnquete();
     $enqueteQuestion->enquete_id = $enquete_id;
-
+    $enqueteQuestion->question_id = $question_id;
     $enqueteQuestion->save();
 
-    return redirect('/employee/question')->with('success', 'Enquete is successfully gekoppeld!');
+    return redirect('/employee/question')
+        ->with('success', 'The selected enquête has been associated with the question.');
 }
+
 
 
     
